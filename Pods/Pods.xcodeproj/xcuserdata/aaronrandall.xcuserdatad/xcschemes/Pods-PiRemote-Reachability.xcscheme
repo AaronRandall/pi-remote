@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE0DCF559D1647339ADEA8B0"
-               BuildableName = "libPods-PiRemote.a"
-               BlueprintName = "Pods-PiRemote"
+               BlueprintIdentifier = "EA45018884B6433283FB4639"
+               BuildableName = "libPods-PiRemote-Reachability.a"
+               BlueprintName = "Pods-PiRemote-Reachability"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

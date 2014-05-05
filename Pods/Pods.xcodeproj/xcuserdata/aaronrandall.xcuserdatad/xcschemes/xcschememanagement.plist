@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-PiRemote-Reachability.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-PiRemote.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>02A03B9B9AB44F3E93EAF5C7</key>
+		<key>CE0DCF559D1647339ADEA8B0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0B9662B2D56A43E6928B1090</key>
+		<key>E467DAADD5A84585980E8A0F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EA45018884B6433283FB4639</key>
 		<dict>
 			<key>primary</key>
 			<true/>
