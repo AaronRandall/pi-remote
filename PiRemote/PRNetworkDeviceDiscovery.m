@@ -12,6 +12,7 @@
 
 @implementation PRNetworkDeviceDiscovery {
     NSString *_apiPath;
+    AFHTTPRequestOperationManager *_manager;
 }
 
 - (id)init
@@ -25,6 +26,7 @@
     
     if(self) {
         _apiPath = apiPath;
+        _manager = [AFHTTPRequestOperationManager manager];
     }
     
     return self;
@@ -47,10 +49,13 @@
         
         NSString *serverPort = @"8080";
         
-        for (int i = 0; i <10; i++) {
+        // Set the max concurrent operations to 8
+        [[_manager operationQueue] setMaxConcurrentOperationCount:8];
+        
+        for (int i = 0; i < 256; i++) {
             NSString *currentIPAddress = [NSString stringWithFormat:@"%@.%d:%@",ipAddress3Octets, i, serverPort];
             [self attemptConnectionForIP:currentIPAddress withPath:_apiPath];
-            sleep(1);
+            //sleep(1);
         }
     } else {
         // Show prompt to connect to wifi or enter IP manually
@@ -62,13 +67,21 @@
     NSString *scheme = @"http";
     NSString *string = [NSString stringWithFormat:@"%@://%@%@.json", scheme, ip, path];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSLog(@"* Requesting %@", string);
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:string]
+                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                          timeoutInterval:2.0];
+    
+    AFHTTPRequestOperation *operation = [_manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         [self.delegate didDiscoverNetworkDeviceAtIP:ip withHostname:@"some-hostname"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
+
+    
+    [[_manager operationQueue] addOperation:operation];
 }
 
 - (NSString *)getIPAddress
