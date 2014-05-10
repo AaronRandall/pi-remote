@@ -76,6 +76,7 @@ static const int maxConcurrentOperationCount = 8;
         
     } else {
         // Show prompt to connect to wifi or enter IP manually
+        [self failedToDiscoverNetworkDeviceWithFailureReason:PRNetworkDeviceDiscoveryFailureReasonNoWifi];
     }
 }
 
@@ -111,7 +112,7 @@ static const int maxConcurrentOperationCount = 8;
                                                                     progressBlock:NULL
                                                                   completionBlock:^(NSArray *operations) {
                                                                       // All requests finished
-                                                                      [self failedToDiscoverNetworkDevice];
+                                                                      [self failedToDiscoverNetworkDeviceWithFailureReason:PRNetworkDeviceDiscoveryFailureReasonServerNotFound];
                                                                   }];
     
     [[_manager operationQueue] addOperations:batchOperations waitUntilFinished:NO];
@@ -197,9 +198,9 @@ static const int maxConcurrentOperationCount = 8;
     [self.delegate didDiscoverNetworkDeviceAtIP:ip withHostname:hostname];
 }
 
-- (void)failedToDiscoverNetworkDevice
+- (void)failedToDiscoverNetworkDeviceWithFailureReason:(PRNetworkDeviceDiscoveryFailureReason)failureReason
 {
-    [self.delegate didFailToDiscoverNetworkDevice];
+    [self.delegate didFailToDiscoverNetworkDeviceWithFailureReason:failureReason];
 }
 
 @end

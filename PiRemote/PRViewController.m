@@ -52,9 +52,19 @@
     NSLog(@"In callback for didDiscoverNetworkDeviceAtIP");
 }
 
-- (void)didFailToDiscoverNetworkDevice
+- (void)didFailToDiscoverNetworkDeviceWithFailureReason:(PRNetworkDeviceDiscoveryFailureReason)failureReason
 {
     NSLog(@"In callback for didFailToDiscoverNetworkDevice");
+    switch (failureReason) {
+        case PRNetworkDeviceDiscoveryFailureReasonNoWifi:
+            NSLog(@"No wifi found");
+            break;
+        case PRNetworkDeviceDiscoveryFailureReasonServerNotFound:
+            NSLog(@"Server not found");
+            break;
+        default:
+            break;
+    }
 }
 
 @end

@@ -6,9 +6,14 @@
 //  Copyright (c) 2014 Aaron Randall. All rights reserved.
 //
 
+typedef enum {
+    PRNetworkDeviceDiscoveryFailureReasonNoWifi,
+    PRNetworkDeviceDiscoveryFailureReasonServerNotFound
+} PRNetworkDeviceDiscoveryFailureReason;
+
 @protocol PRNetworkDeviceDiscoveryDelegate <NSObject>
 
 - (void)didDiscoverNetworkDeviceAtIP:(NSString*)ip withHostname:(NSString*)hostname;
-- (void)didFailToDiscoverNetworkDevice;
+- (void)didFailToDiscoverNetworkDeviceWithFailureReason:(PRNetworkDeviceDiscoveryFailureReason)failureReason;
 
 @end
