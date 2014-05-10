@@ -38,6 +38,15 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>PiRemoteServerDiscoverAPI</key>
+	<dict>
+		<key>Scheme</key>
+		<string>http</string>
+		<key>Port</key>
+		<integer>8080</integer>
+		<key>Path</key>
+		<string>/pi_remote/discover.json</string>
+	</dict>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

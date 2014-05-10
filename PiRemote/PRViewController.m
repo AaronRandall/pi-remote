@@ -23,13 +23,16 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSString *scheme = @"http";
-    int port = 8080;
-    NSString *apiPath = @"/pi_remote/discover.json";
+    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSDictionary* piRemoteServer = [infoDict objectForKey:@"PiRemoteServerDiscoverAPI"];
+    
+    NSString *scheme = piRemoteServer[@"Scheme"];
+    int port = [piRemoteServer[@"Port"] integerValue];
+    NSString *path = piRemoteServer[@"Path"];
     
     PRNetworkDeviceDiscovery *networkDeviceDiscovery = [[PRNetworkDeviceDiscovery alloc] initWithScheme:scheme
                                                                                                    port:port
-                                                                                                apiPath:apiPath];
+                                                                                                   path:path];
     networkDeviceDiscovery.delegate = self;
     
     [networkDeviceDiscovery startDiscovery];

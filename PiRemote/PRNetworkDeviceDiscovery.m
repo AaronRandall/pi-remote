@@ -15,7 +15,7 @@ static const int maxConcurrentOperationCount = 8;
 @implementation PRNetworkDeviceDiscovery {
     NSString *_scheme;
     int _port;
-    NSString *_apiPath;
+    NSString *_path;
     
     AFHTTPRequestOperationManager *_manager;
     NSMutableArray *_requestOperations;
@@ -23,17 +23,17 @@ static const int maxConcurrentOperationCount = 8;
 
 - (id)init
 {
-    return [self initWithScheme:@"http" port:80 apiPath:@"/"];
+    return [self initWithScheme:@"http" port:80 path:@"/"];
 }
 
-- (id)initWithScheme:(NSString*)scheme port:(int)port apiPath:(NSString*)apiPath
+- (id)initWithScheme:(NSString*)scheme port:(int)port path:(NSString*)path
 {
     self = [super init];
     
     if(self) {
         _scheme = scheme;
         _port = port;
-        _apiPath = apiPath;
+        _path = path;
         
         _manager = [AFHTTPRequestOperationManager manager];
         _requestOperations = [NSMutableArray array];
@@ -63,7 +63,7 @@ static const int maxConcurrentOperationCount = 8;
         for (int i = 0; i < 256; i++) {
             NSString *currentIPAddress = [NSString stringWithFormat:@"%@.%d",ipAddress3Octets, i];
             
-            NSString *urlString = [NSString stringWithFormat:@"%@://%@:%d%@", _scheme, currentIPAddress, _port, _apiPath];
+            NSString *urlString = [NSString stringWithFormat:@"%@://%@:%d%@", _scheme, currentIPAddress, _port, _path];
             NSURL *url = [NSURL URLWithString:urlString];
             
             NSLog(@"* Requesting %@", urlString);
