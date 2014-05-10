@@ -10,23 +10,33 @@
 #import "AFNetworking.h"
 #import "Reachability.h"
 
+static const int maxConcurrentOperationCount = 8;
+
 @implementation PRNetworkDeviceDiscovery {
+    NSString *_scheme;
+    int _port;
     NSString *_apiPath;
+    
     AFHTTPRequestOperationManager *_manager;
+    NSMutableArray *_requestOperations;
 }
 
 - (id)init
 {
-    return [self initWithApiPath:@""];
+    return [self initWithScheme:@"http" port:80 apiPath:@"/"];
 }
 
-- (id)initWithApiPath:(NSString*)apiPath
+- (id)initWithScheme:(NSString*)scheme port:(int)port apiPath:(NSString*)apiPath
 {
     self = [super init];
     
     if(self) {
+        _scheme = scheme;
+        _port = port;
         _apiPath = apiPath;
+        
         _manager = [AFHTTPRequestOperationManager manager];
+        _requestOperations = [NSMutableArray array];
     }
     
     return self;
@@ -47,41 +57,64 @@
                                       [ipAdressOctets objectAtIndex:1],
                                       [ipAdressOctets objectAtIndex:2]];
         
-        NSString *serverPort = @"8080";
-        
         // Set the max concurrent operations to 8
-        [[_manager operationQueue] setMaxConcurrentOperationCount:8];
+        [[_manager operationQueue] setMaxConcurrentOperationCount:maxConcurrentOperationCount];
         
         for (int i = 0; i < 256; i++) {
-            NSString *currentIPAddress = [NSString stringWithFormat:@"%@.%d:%@",ipAddress3Octets, i, serverPort];
-            [self attemptConnectionForIP:currentIPAddress withPath:_apiPath];
-            //sleep(1);
+            NSString *currentIPAddress = [NSString stringWithFormat:@"%@.%d",ipAddress3Octets, i];
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@://%@:%d%@", _scheme, currentIPAddress, _port, _apiPath];
+            NSURL *url = [NSURL URLWithString:urlString];
+            
+            NSLog(@"* Requesting %@", urlString);
+            
+            // Construct a request operation for the current IP
+            [_requestOperations addObject:[self requestOperationForURL:url]];
         }
+        
+        [self processRequestOperations];
+        
     } else {
         // Show prompt to connect to wifi or enter IP manually
     }
 }
 
-- (void)attemptConnectionForIP:(NSString*)ip withPath:(NSString*)path
+- (AFHTTPRequestOperation*)requestOperationForURL:(NSURL*)url
 {
-    NSString *scheme = @"http";
-    NSString *string = [NSString stringWithFormat:@"%@://%@%@.json", scheme, ip, path];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url
+                                             cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                         timeoutInterval:2.0];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
-    NSLog(@"* Requesting %@", string);
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *operationResponse = [self dictionaryWithResponseObject:responseObject];
+        
+        if ([self requestOperationResponseContainsSuccessStatus:operationResponse]) {
+            NSString *host = [[[operation request] URL] host];
+            NSString *hostname = operationResponse[@"data"][@"hostname"];
+            
+            [self discoveredNetworkDeviceAtIP:host withHostname:hostname];
+        }
+    }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         NSLog(@"ERROR for URL: %@: %@",  [[operation request] URL], error.description);
+                                         
+                                     }
+     ];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:string]
-                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                          timeoutInterval:2.0];
-    
-    AFHTTPRequestOperation *operation = [_manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        [self.delegate didDiscoverNetworkDeviceAtIP:ip withHostname:@"some-hostname"];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
+    return operation;
+}
 
+- (void)processRequestOperations
+{
+    NSArray *batchOperations = [AFURLConnectionOperation batchOfRequestOperations:_requestOperations
+                                                                    progressBlock:NULL
+                                                                  completionBlock:^(NSArray *operations) {
+                                                                      // All requests finished
+                                                                      [self failedToDiscoverNetworkDevice];
+                                                                  }];
     
-    [[_manager operationQueue] addOperation:operation];
+    [[_manager operationQueue] addOperations:batchOperations waitUntilFinished:NO];
 }
 
 - (NSString *)getIPAddress
@@ -128,6 +161,45 @@
     }
     
     return NO;
+}
+
+- (NSDictionary*)dictionaryWithResponseObject:(id)responseObject
+{
+    NSDictionary *operationResponse;
+    NSError *error = nil;
+    if (responseObject != nil) {
+        operationResponse = [NSJSONSerialization JSONObjectWithData:responseObject
+                                                            options:NSJSONReadingMutableContainers
+                                                              error:&error];
+    }
+    
+    return operationResponse;
+}
+
+- (BOOL)requestOperationResponseContainsSuccessStatus:(NSDictionary*)response
+{
+    if (response && response[@"status"]) {
+        NSString *status = [response[@"status"] lowercaseString];
+        
+        if ([status isEqualToString:@"success"]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (void)discoveredNetworkDeviceAtIP:(NSString*)ip withHostname:(NSString*)hostname
+{
+    // Stop all other requests
+    [[_manager operationQueue] cancelAllOperations];
+    
+    [self.delegate didDiscoverNetworkDeviceAtIP:ip withHostname:hostname];
+}
+
+- (void)failedToDiscoverNetworkDevice
+{
+    [self.delegate didFailToDiscoverNetworkDevice];
 }
 
 @end

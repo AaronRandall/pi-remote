@@ -10,7 +10,7 @@
 
 @interface PRNetworkDeviceDiscovery : NSObject
 
-- (id)initWithApiPath:(NSString*)apiPath;
+- (id)initWithScheme:(NSString*)scheme port:(int)port apiPath:(NSString*)apiPath;
 - (void)startDiscovery;
 
 @property (weak, nonatomic) id<PRNetworkDeviceDiscoveryDelegate> delegate;

@@ -23,8 +23,13 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSString *apiPath = @"/pi_remote/discover";
-    PRNetworkDeviceDiscovery *networkDeviceDiscovery = [[PRNetworkDeviceDiscovery alloc] initWithApiPath:apiPath];
+    NSString *scheme = @"http";
+    int port = 8080;
+    NSString *apiPath = @"/pi_remote/discover.json";
+    
+    PRNetworkDeviceDiscovery *networkDeviceDiscovery = [[PRNetworkDeviceDiscovery alloc] initWithScheme:scheme
+                                                                                                   port:port
+                                                                                                apiPath:apiPath];
     networkDeviceDiscovery.delegate = self;
     
     [networkDeviceDiscovery startDiscovery];
@@ -42,6 +47,11 @@
 - (void)didDiscoverNetworkDeviceAtIP:(NSString *)ip withHostname:(NSString *)hostname
 {
     NSLog(@"In callback for didDiscoverNetworkDeviceAtIP");
+}
+
+- (void)didFailToDiscoverNetworkDevice
+{
+    NSLog(@"In callback for didFailToDiscoverNetworkDevice");
 }
 
 @end

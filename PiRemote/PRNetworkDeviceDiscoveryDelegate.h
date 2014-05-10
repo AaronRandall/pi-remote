@@ -9,5 +9,6 @@
 @protocol PRNetworkDeviceDiscoveryDelegate <NSObject>
 
 - (void)didDiscoverNetworkDeviceAtIP:(NSString*)ip withHostname:(NSString*)hostname;
+- (void)didFailToDiscoverNetworkDevice;
 
 @end
