@@ -37,10 +37,12 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    self.searchingLabel.hidden = YES;
+    
     CALayer *layer = self.searchingLabel.layer;
     [layer pop_removeAllAnimations];
     
-    POPSpringAnimation *animation = [POPSpringAnimation slideDownAnimationFrom:@(-200) to:@(50)];
+    POPSpringAnimation *animation = [POPSpringAnimation slideDownAnimationFrom:@(-50) to:@(50)];
     
     animation.completionBlock = ^(POPAnimation *animation, BOOL finished) {
         // Give the shimmer animation a short delay to display before attempting to discover the server
@@ -49,7 +51,10 @@
         });
     };
     
-    [layer pop_addAnimation:animation forKey:@"slide_down"];
+    dispatch_async_main_after(1.0, ^(void){
+        self.searchingLabel.hidden = NO;
+        [layer pop_addAnimation:animation forKey:@"slide_down"];
+    });
 }
 
 - (void)didReceiveMemoryWarning
