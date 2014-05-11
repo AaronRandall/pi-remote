@@ -10,7 +10,7 @@
 #import "AFNetworking.h"
 #import "Reachability.h"
 
-static const int kMaxConcurrentOperationCount = 8;
+static const int kMaxConcurrentOperationCount = 10;
 
 @implementation PRNetworkDeviceDiscovery {
     NSString *_scheme;

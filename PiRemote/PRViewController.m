@@ -20,10 +20,13 @@
     FBShimmeringView *_shimmeringView;
 }
 
+#pragma mark -
+#pragma mark View lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
+    
     [self setupNetworkDeviceDiscovery];
 }
 
@@ -39,7 +42,7 @@
     
     POPSpringAnimation *animation = [POPSpringAnimation slideDownAnimationFrom:@(-200) to:@(50)];
     
-    animation.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+    animation.completionBlock = ^(POPAnimation *animation, BOOL finished) {
         // Give the shimmer animation a short delay to display before attempting to discover the server
         dispatch_async_main_after(1.5, ^(void){
             [_networkDeviceDiscovery startDiscovery];
@@ -72,9 +75,6 @@
     _networkDeviceDiscovery.delegate = self;
 }
 
-#pragma mark -
-#pragma mark Animations
-
 - (void)startSearchingLabelAnimation
 {
     _shimmeringView = [FBShimmeringView commonConfigurationWithFrame:self.searchingLabel.frame];
@@ -97,9 +97,9 @@
     CALayer *layer = self.searchingLabel.layer;
     [layer pop_removeAllAnimations];
     
-    POPSpringAnimation *animation = [POPSpringAnimation slideUpAnimationFrom:nil to:@(25)];
+    POPSpringAnimation *animation = [POPSpringAnimation slideUpAnimationFrom:nil to:@(26)];
     
-    animation.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+    animation.completionBlock = ^(POPAnimation *animation, BOOL finished) {
         self.discoveredRaspberryPiLabel.alpha = 0;
         self.discoveredRaspberryPiLabel.hidden = NO;
         
