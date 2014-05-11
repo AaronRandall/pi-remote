@@ -40,10 +40,8 @@
     POPSpringAnimation *animation = [POPSpringAnimation slideDownAnimationFrom:@(-200) to:@(50)];
     
     animation.completionBlock = ^(POPAnimation *anim, BOOL finished) {
-        // Give the shimmer animation a second to display before doing an leg work
-        double delayInSeconds = 1.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        // Give the shimmer animation a short delay to display before attempting to discover the server
+        dispatch_async_main_after(1.5, ^(void){
             [_networkDeviceDiscovery startDiscovery];
         });
     };
@@ -54,7 +52,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark -
@@ -110,9 +107,7 @@
                          animations:^{
                              self.discoveredRaspberryPiLabel.alpha = 1;
                          } completion:^(BOOL finished) {
-                             double delayInSeconds = 2.0;
-                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                             dispatch_async_main_after(2.0, ^(void){
                                  [self performSegueWithIdentifier: @"ToRemoteView" sender: self];
                              });
                          }];

@@ -44,6 +44,7 @@
 		736EF42519200D4D00CE29B3 /* POPSpringAnimation+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "POPSpringAnimation+Common.m"; sourceTree = "<group>"; };
 		736EF4271920104000CE29B3 /* FBShimmeringView+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FBShimmeringView+Common.h"; sourceTree = "<group>"; };
 		736EF4281920104000CE29B3 /* FBShimmeringView+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FBShimmeringView+Common.m"; sourceTree = "<group>"; };
+		736EF42A192012FB00CE29B3 /* PRCommonMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRCommonMacros.h; sourceTree = "<group>"; };
 		73A9DE631917F976009A7D06 /* PRNetworkDeviceDiscovery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRNetworkDeviceDiscovery.h; sourceTree = "<group>"; };
 		73A9DE641917F976009A7D06 /* PRNetworkDeviceDiscovery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRNetworkDeviceDiscovery.m; sourceTree = "<group>"; };
 		73A9DE6C1917FFD0009A7D06 /* PRNetworkDeviceDiscoveryDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRNetworkDeviceDiscoveryDelegate.h; sourceTree = "<group>"; };
@@ -102,6 +103,7 @@
 				736EF42519200D4D00CE29B3 /* POPSpringAnimation+Common.m */,
 				736EF4271920104000CE29B3 /* FBShimmeringView+Common.h */,
 				736EF4281920104000CE29B3 /* FBShimmeringView+Common.m */,
+				736EF42A192012FB00CE29B3 /* PRCommonMacros.h */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
