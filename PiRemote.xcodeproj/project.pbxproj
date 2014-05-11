@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		736EF42619200D4D00CE29B3 /* POPSpringAnimation+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 736EF42519200D4D00CE29B3 /* POPSpringAnimation+Common.m */; };
+		736EF4291920104000CE29B3 /* FBShimmeringView+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 736EF4281920104000CE29B3 /* FBShimmeringView+Common.m */; };
 		73A9DE651917F976009A7D06 /* PRNetworkDeviceDiscovery.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A9DE641917F976009A7D06 /* PRNetworkDeviceDiscovery.m */; };
 		73BC6E761917F46100500D44 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BC6E751917F46100500D44 /* Foundation.framework */; };
 		73BC6E781917F46100500D44 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BC6E771917F46100500D44 /* CoreGraphics.framework */; };
@@ -38,6 +40,10 @@
 
 /* Begin PBXFileReference section */
 		49DB6A914FF34E53B0CD865E /* Pods-PiRemote.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PiRemote.xcconfig"; path = "Pods/Pods-PiRemote.xcconfig"; sourceTree = "<group>"; };
+		736EF42419200D4D00CE29B3 /* POPSpringAnimation+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "POPSpringAnimation+Common.h"; sourceTree = "<group>"; };
+		736EF42519200D4D00CE29B3 /* POPSpringAnimation+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "POPSpringAnimation+Common.m"; sourceTree = "<group>"; };
+		736EF4271920104000CE29B3 /* FBShimmeringView+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FBShimmeringView+Common.h"; sourceTree = "<group>"; };
+		736EF4281920104000CE29B3 /* FBShimmeringView+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FBShimmeringView+Common.m"; sourceTree = "<group>"; };
 		73A9DE631917F976009A7D06 /* PRNetworkDeviceDiscovery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRNetworkDeviceDiscovery.h; sourceTree = "<group>"; };
 		73A9DE641917F976009A7D06 /* PRNetworkDeviceDiscovery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRNetworkDeviceDiscovery.m; sourceTree = "<group>"; };
 		73A9DE6C1917FFD0009A7D06 /* PRNetworkDeviceDiscoveryDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRNetworkDeviceDiscoveryDelegate.h; sourceTree = "<group>"; };
@@ -55,7 +61,7 @@
 		73BC6E8B1917F46100500D44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		73BC6E8D1917F46100500D44 /* PRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PRViewController.h; sourceTree = "<group>"; };
 		73BC6E8E1917F46100500D44 /* PRViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PRViewController.m; sourceTree = "<group>"; };
-		73BC6E901917F46100500D44 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		73BC6E901917F46100500D44 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PiRemote/Images.xcassets; sourceTree = "<group>"; };
 		73BC6E961917F46100500D44 /* PiRemoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PiRemoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		73BC6E971917F46100500D44 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		73BC6E9F1917F46100500D44 /* PiRemoteTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PiRemoteTests-Info.plist"; sourceTree = "<group>"; };
@@ -89,6 +95,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		736EF42319200D3300CE29B3 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				736EF42419200D4D00CE29B3 /* POPSpringAnimation+Common.h */,
+				736EF42519200D4D00CE29B3 /* POPSpringAnimation+Common.m */,
+				736EF4271920104000CE29B3 /* FBShimmeringView+Common.h */,
+				736EF4281920104000CE29B3 /* FBShimmeringView+Common.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		73A9DE5E1917F768009A7D06 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				73BC6E7B1917F46100500D44 /* PiRemote */,
+				73BC6E901917F46100500D44 /* Images.xcassets */,
 				73BC6E9D1917F46100500D44 /* PiRemoteTests */,
 				73BC6E741917F46100500D44 /* Frameworks */,
 				73BC6E731917F46100500D44 /* Products */,
@@ -181,7 +199,7 @@
 				73A9DE611917F780009A7D06 /* Controllers */,
 				73A9DE5E1917F768009A7D06 /* Application */,
 				73A9DE621917F7B2009A7D06 /* Library */,
-				73BC6E901917F46100500D44 /* Images.xcassets */,
+				736EF42319200D3300CE29B3 /* Helpers */,
 				73BC6E7C1917F46100500D44 /* Supporting Files */,
 			);
 			path = PiRemote;
@@ -352,8 +370,10 @@
 			files = (
 				73BC6E861917F46100500D44 /* PRAppDelegate.m in Sources */,
 				73A9DE651917F976009A7D06 /* PRNetworkDeviceDiscovery.m in Sources */,
+				736EF4291920104000CE29B3 /* FBShimmeringView+Common.m in Sources */,
 				73BC6E8F1917F46100500D44 /* PRViewController.m in Sources */,
 				73BC6E821917F46100500D44 /* main.m in Sources */,
+				736EF42619200D4D00CE29B3 /* POPSpringAnimation+Common.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

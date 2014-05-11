@@ -10,7 +10,7 @@
 #import "AFNetworking.h"
 #import "Reachability.h"
 
-static const int maxConcurrentOperationCount = 8;
+static const int kMaxConcurrentOperationCount = 8;
 
 @implementation PRNetworkDeviceDiscovery {
     NSString *_scheme;
@@ -58,7 +58,7 @@ static const int maxConcurrentOperationCount = 8;
                                       [ipAdressOctets objectAtIndex:2]];
         
         // Set the max concurrent operations to 8
-        [[_manager operationQueue] setMaxConcurrentOperationCount:maxConcurrentOperationCount];
+        [[_manager operationQueue] setMaxConcurrentOperationCount:kMaxConcurrentOperationCount];
         
         for (int i = 0; i < 256; i++) {
             NSString *currentIPAddress = [NSString stringWithFormat:@"%@.%d",ipAddress3Octets, i];
