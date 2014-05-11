@@ -8,17 +8,34 @@
 
 #import "PRViewController.h"
 #import "PRNetworkDeviceDiscovery.h"
+#import "FBShimmeringView.h"
+#import <POP/POP.h>
 
 @interface PRViewController ()
 
 @end
 
-@implementation PRViewController
+@implementation PRViewController {
+    FBShimmeringView *_shimmeringView;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    _shimmeringView = [[FBShimmeringView alloc] initWithFrame:self.searchingLabel.frame];
+    _shimmeringView.shimmering = YES;
+    _shimmeringView.shimmeringOpacity = 0.2;
+    _shimmeringView.shimmeringSpeed = 100;
+    
+    [self.view addSubview:_shimmeringView];
+    
+    _shimmeringView.contentView = self.searchingLabel;
+    _shimmeringView.shimmering = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -35,7 +52,25 @@
                                                                                                    path:path];
     networkDeviceDiscovery.delegate = self;
     
-    [networkDeviceDiscovery startDiscovery];
+    
+    CALayer *layer = self.searchingLabel.layer;
+    [layer pop_removeAllAnimations];
+    
+    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
+    anim.fromValue = @(-200);
+    anim.springBounciness = 10;
+    anim.springSpeed = 2;
+    
+    anim.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+        // Give the shimmer animation a second to display before doing an leg work
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [networkDeviceDiscovery startDiscovery];
+        });
+    };
+    
+    [layer pop_addAnimation:anim forKey:@"slide_down"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,6 +85,33 @@
 - (void)didDiscoverNetworkDeviceAtIP:(NSString *)ip withHostname:(NSString *)hostname
 {
     NSLog(@"In callback for didDiscoverNetworkDeviceAtIP");
+    self.discoveredRaspberryPiLabel.text = [NSString stringWithFormat: @"Woohoo! Found %@.", hostname];
+    
+    _shimmeringView.shimmering = NO;
+    
+    CALayer *layer = self.searchingLabel.layer;
+    [layer pop_removeAllAnimations];
+    
+    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
+    anim.toValue = @(-5);
+    anim.springBounciness = 10;
+    anim.springSpeed = 2;
+    
+    
+    
+    anim.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+        self.discoveredRaspberryPiLabel.alpha = 0;
+        self.discoveredRaspberryPiLabel.hidden = NO;
+        
+        [UIView animateWithDuration:0.7f
+                         animations:^{
+                             self.discoveredRaspberryPiLabel.alpha = 1;
+                         } completion:^(BOOL finished) {
+                             NSLog(@"TODO: Move onto main remote view");
+                         }];
+    };
+    
+    [layer pop_addAnimation:anim forKey:@"slide_up"];
 }
 
 - (void)didFailToDiscoverNetworkDeviceWithFailureReason:(PRNetworkDeviceDiscoveryFailureReason)failureReason

@@ -493,6 +493,7 @@
 				GCC_PREFIX_HEADER = "PiRemote/PiRemote-Prefix.pch";
 				INFOPLIST_FILE = "PiRemote/PiRemote-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "725E73A7-392D-46E8-AF0E-0C3252D137FF";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -507,6 +508,7 @@
 				GCC_PREFIX_HEADER = "PiRemote/PiRemote-Prefix.pch";
 				INFOPLIST_FILE = "PiRemote/PiRemote-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "725E73A7-392D-46E8-AF0E-0C3252D137FF";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

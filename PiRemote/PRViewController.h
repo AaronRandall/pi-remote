@@ -10,4 +10,7 @@
 
 @interface PRViewController : UIViewController<PRNetworkDeviceDiscoveryDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *searchingLabel;
+@property (weak, nonatomic) IBOutlet UILabel *discoveredRaspberryPiLabel;
+
 @end

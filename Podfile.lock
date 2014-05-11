@@ -18,14 +18,20 @@ PODS:
   - AFNetworking/UIKit (2.2.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - pop (1.0.4)
   - Reachability (3.1.1)
+  - Shimmer (1.0.1)
 
 DEPENDENCIES:
   - AFNetworking (= 2.2.3)
+  - pop (~> 1.0)
   - Reachability (= 3.1.1)
+  - Shimmer (~> 1.0)
 
 SPEC CHECKSUMS:
   AFNetworking: ae513199cca79e9d7af2708ccabe2ed075550c42
+  pop: 63a4f5e8942077fed2efe195036ecc572c71c48c
   Reachability: be4883bb93f31e38266ae3365e5600a317aae735
+  Shimmer: a1b92685f04ae7363e655f636a41a276dbb1507e
 
 COCOAPODS: 0.32.1

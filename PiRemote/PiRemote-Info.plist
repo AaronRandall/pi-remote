@@ -24,6 +24,15 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>PiRemoteServerDiscoverAPI</key>
+	<dict>
+		<key>Path</key>
+		<string>/pi_remote/discover.json</string>
+		<key>Port</key>
+		<integer>8080</integer>
+		<key>Scheme</key>
+		<string>http</string>
+	</dict>
 	<key>UIMainStoryboardFile</key>
 	<string>Main_iPhone</string>
 	<key>UIMainStoryboardFile~ipad</key>
@@ -35,18 +44,7 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>PiRemoteServerDiscoverAPI</key>
-	<dict>
-		<key>Scheme</key>
-		<string>http</string>
-		<key>Port</key>
-		<integer>8080</integer>
-		<key>Path</key>
-		<string>/pi_remote/discover.json</string>
-	</dict>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
