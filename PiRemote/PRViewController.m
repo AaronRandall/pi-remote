@@ -58,6 +58,7 @@
     
     POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
     anim.fromValue = @(-200);
+    anim.toValue = @(50);
     anim.springBounciness = 10;
     anim.springSpeed = 2;
     
@@ -85,6 +86,7 @@
 - (void)didDiscoverNetworkDeviceAtIP:(NSString *)ip withHostname:(NSString *)hostname
 {
     NSLog(@"In callback for didDiscoverNetworkDeviceAtIP");
+    
     self.discoveredRaspberryPiLabel.text = [NSString stringWithFormat: @"Woohoo! Found %@.", hostname];
     
     _shimmeringView.shimmering = NO;
@@ -93,11 +95,9 @@
     [layer pop_removeAllAnimations];
     
     POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
-    anim.toValue = @(-5);
+    anim.toValue = @(25);
     anim.springBounciness = 10;
     anim.springSpeed = 2;
-    
-    
     
     anim.completionBlock = ^(POPAnimation *anim, BOOL finished) {
         self.discoveredRaspberryPiLabel.alpha = 0;
@@ -108,6 +108,11 @@
                              self.discoveredRaspberryPiLabel.alpha = 1;
                          } completion:^(BOOL finished) {
                              NSLog(@"TODO: Move onto main remote view");
+                             double delayInSeconds = 2.0;
+                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                 [self performSegueWithIdentifier: @"ToRemoteView" sender: self];
+                             });
                          }];
     };
     
