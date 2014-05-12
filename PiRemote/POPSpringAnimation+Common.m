@@ -8,7 +8,7 @@
 
 #import "POPSpringAnimation+Common.h"
 
-static const int kSpringBounciness = 10;
+static const int kSpringBounciness = 15;
 static const int kSpringSpeed = 10;
 
 @implementation POPSpringAnimation (Common)

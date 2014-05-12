@@ -10,7 +10,7 @@
 #import "AFNetworking.h"
 #import "Reachability.h"
 
-static const int kMaxConcurrentOperationCount = 10;
+static const int kMaxConcurrentOperationCount = 20;
 
 @implementation PRNetworkDeviceDiscovery {
     NSString *_scheme;
@@ -19,6 +19,7 @@ static const int kMaxConcurrentOperationCount = 10;
     
     AFHTTPRequestOperationManager *_manager;
     NSMutableArray *_requestOperations;
+    float _requestProgress;
 }
 
 - (id)init
@@ -37,6 +38,7 @@ static const int kMaxConcurrentOperationCount = 10;
         
         _manager = [AFHTTPRequestOperationManager manager];
         _requestOperations = [NSMutableArray array];
+        _requestProgress = 0;
     }
     
     return self;
@@ -99,7 +101,7 @@ static const int kMaxConcurrentOperationCount = 10;
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          NSLog(@"ERROR for URL: %@: %@",  [[operation request] URL], error.description);
-                                         
+                                         [self increasePercentageProgress];
                                      }
      ];
     
@@ -201,6 +203,16 @@ static const int kMaxConcurrentOperationCount = 10;
 - (void)failedToDiscoverNetworkDeviceWithFailureReason:(PRNetworkDeviceDiscoveryFailureReason)failureReason
 {
     [self.delegate didFailToDiscoverNetworkDeviceWithFailureReason:failureReason];
+}
+
+- (void)increasePercentageProgress
+{
+    _requestProgress++;
+    
+    float totalRequestCount = 255;
+    float percentageProgress = (1/totalRequestCount) * _requestProgress;
+    
+    [self.delegate didUpdatePercentageProgress:percentageProgress];
 }
 
 @end

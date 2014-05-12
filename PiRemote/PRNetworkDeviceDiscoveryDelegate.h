@@ -15,5 +15,6 @@ typedef enum {
 
 - (void)didDiscoverNetworkDeviceAtIP:(NSString*)ip withHostname:(NSString*)hostname;
 - (void)didFailToDiscoverNetworkDeviceWithFailureReason:(PRNetworkDeviceDiscoveryFailureReason)failureReason;
+- (void)didUpdatePercentageProgress:(float)progress;
 
 @end

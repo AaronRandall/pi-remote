@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *searchingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *discoveredRaspberryPiLabel;
+@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 
 @end
