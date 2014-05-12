@@ -138,7 +138,7 @@
 
 - (void)didUpdatePercentageProgress:(float)progress
 {
-    self.progressView.progress = progress;
+    [self.progressView setProgress:progress animated:YES];
 }
 
 @end
