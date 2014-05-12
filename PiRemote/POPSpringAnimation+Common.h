@@ -10,7 +10,6 @@
 
 @interface POPSpringAnimation (Common)
 
-+ (POPSpringAnimation*)slideDownAnimationFrom:(id)from to:(id)to;
-+ (POPSpringAnimation*)slideUpAnimationFrom:(id)from to:(id)to;
++ (POPSpringAnimation*)positionYAnimationFrom:(id)from to:(id)to;
 
 @end

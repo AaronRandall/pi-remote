@@ -42,7 +42,7 @@
     CALayer *layer = self.searchingLabel.layer;
     [layer pop_removeAllAnimations];
     
-    POPSpringAnimation *animation = [POPSpringAnimation slideDownAnimationFrom:@(-50) to:@(25)];
+    POPSpringAnimation *animation = [POPSpringAnimation positionYAnimationFrom:@(-50) to:@(50)];
     
     animation.completionBlock = ^(POPAnimation *animation, BOOL finished) {
         // Give the shimmer animation a short delay to display before attempting to discover the server
@@ -96,13 +96,15 @@
 - (void)didDiscoverNetworkDeviceAtIP:(NSString *)ip withHostname:(NSString *)hostname
 {
     self.discoveredRaspberryPiLabel.text = [NSString stringWithFormat: @"Woohoo! Found '%@.'", hostname];
+ 
+    [self.progressView setProgress:1 animated:YES];
     
     _shimmeringView.shimmering = NO;
     
     CALayer *layer = self.searchingLabel.layer;
     [layer pop_removeAllAnimations];
     
-    POPSpringAnimation *animation = [POPSpringAnimation slideUpAnimationFrom:nil to:@(26)];
+    POPSpringAnimation *animation = [POPSpringAnimation positionYAnimationFrom:nil to:@(26)];
     
     animation.completionBlock = ^(POPAnimation *animation, BOOL finished) {
         self.discoveredRaspberryPiLabel.alpha = 0;
