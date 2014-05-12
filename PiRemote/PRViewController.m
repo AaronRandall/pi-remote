@@ -95,7 +95,7 @@
 
 - (void)didDiscoverNetworkDeviceAtIP:(NSString *)ip withHostname:(NSString *)hostname
 {
-    self.discoveredRaspberryPiLabel.text = [NSString stringWithFormat: @"Woohoo! Found %@.", hostname];
+    self.discoveredRaspberryPiLabel.text = [NSString stringWithFormat: @"Woohoo! Found '%@.'", hostname];
     
     _shimmeringView.shimmering = NO;
     
